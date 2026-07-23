@@ -30,12 +30,12 @@ export default async function ProductPage({ params }: PageProps) {
     );
   }
 
-  // 2. جلب أسعار المتاجر الخاصة بهذا المنتج وترتيبها من الأرخص للأغلى
+  // 2. جلب أسعار المتاجر وترتيبها من الأرخص للأغلى
   const { data: storesPrices } = await supabase
     .from('product_prices')
     .select('*')
     .eq('product_id', productId)
-    .order('price', { ascending: true }); // الترتيب من الأرخص للأغلى تلقائياً
+    .order('price', { ascending: true });
 
   return (
     <main className="min-h-screen bg-black text-white p-6 md:p-12 flex flex-col">
@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* قسم مقارنة الأسعار بين المتاجر (الأرخص أولاً) */}
+        {/* قسم مقارنة الأسعار بين المتاجر مع شعار العملة */}
         <div className="mt-16 bg-neutral-950 border border-neutral-900 rounded-3xl p-8 md:p-10">
           <div className="flex items-center justify-between mb-8">
             <h3 className='text-2xl font-bold'>مقارنة الأسعار في المتاجر</h3>
@@ -125,10 +125,17 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-6 space-x-reverse">
-                    <span className="text-2xl font-bold font-mono text-green-400">
-                      ${store.price}
-                    </span>
+                  <div className="flex items-center space-x-4 space-x-reverse">
+                    <div className="flex items-center space-x-1.5 space-x-reverse">
+                      <span className="text-2xl font-bold font-mono text-green-400">
+                        {store.price}
+                      </span>
+                      {/* شعار أو أيقونة الريال السعودي */}
+                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 bg-neutral-900 border border-neutral-800 rounded text-[11px] font-bold text-gray-400 font-mono tracking-tighter">
+                        ر.س
+                      </span>
+                    </div>
+
                     <a
                       href={store.store_url || '#'}
                       target="_blank"
@@ -147,7 +154,7 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500 font-mono text-sm border border-dashed border-neutral-800 rounded-2xl">
-              لم يتم إقرار متاجر لهذا المنتج بعد. (أضف أسعار في جدول product_prices في Supabase لتظهر هنا)
+              لم يتم إقرار متاجر لهذا المنتج بعد. أضف أسعار في جدول product_prices في Supabase لتظهر هنا.
             </div>
           )}
         </div>

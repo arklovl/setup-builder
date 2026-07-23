@@ -102,53 +102,53 @@ export default async function ProductPage({ params }: PageProps) {
               {storesPrices.map((store, index) => (
                 <div 
                   key={store.id} 
-                  className={`group relative flex items-center justify-between px-4 py-3 rounded-2xl border transition-all gap-4 ${
+                  className={`group relative flex items-center justify-between px-5 py-4 rounded-2xl border transition-all gap-4 ${
                     index === 0 
                       ? 'bg-neutral-900 border-white/40 shadow-xl shadow-black/50' 
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر */}
-                  <div className="flex items-center space-x-3 space-x-reverse">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono text-xs font-bold shrink-0 ${
-                      index === 0 ? 'bg-white text-black shadow-md' : 'bg-neutral-800 text-neutral-400'
+                  {/* معلومات المتجر مع الترتيب */}
+                  <div className="flex items-center space-x-3.5 space-x-reverse">
+                    <span className={`px-2.5 py-1 rounded-md font-mono text-xs font-bold shrink-0 ${
+                      index === 0 ? 'bg-white text-black shadow-sm' : 'bg-neutral-800 text-neutral-300'
                     }`}>
                       #{index + 1}
-                    </div>
+                    </span>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-white">{store.store_name}</span>
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
                         {index === 0 && (
-                          <span className="text-[9px] bg-white text-black font-extrabold px-1.5 py-0.5 rounded">
+                          <span className="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
                             🔥 الأرخص
                           </span>
                         )}
                       </div>
-                      <span className="text-[11px] text-neutral-400 font-mono block">متوفر للشحن السريع</span>
+                      <span className="text-xs text-neutral-400 font-mono mt-0.5 block">متوفر للشحن السريع</span>
                     </div>
                   </div>
 
                   {/* السعر وزر الشراء */}
-                  <div className="flex items-center space-x-4 space-x-reverse">
+                  <div className="flex items-center space-x-6 space-x-reverse">
                     <div className="text-left sm:text-right font-mono">
-                      <span className="text-xl font-black text-white">
+                      <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      <span className="text-[10px] font-semibold text-neutral-400 uppercase mr-1">ر.س</span>
+                      <span className="text-xs font-semibold text-neutral-400 uppercase mr-1.5">ر.س</span>
                     </div>
 
                     <a
                       href={store.store_url || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                         index === 0
                           ? 'bg-white text-black hover:bg-neutral-200 active:scale-95'
                           : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
                       }`}
                     >
                       <span>زيارة المتجر</span>
-                      <span className="font-mono text-[10px]">↗</span>
+                      <span className="font-mono text-xs">↗</span>
                     </a>
                   </div>
                 </div>

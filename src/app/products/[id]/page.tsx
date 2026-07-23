@@ -90,7 +90,6 @@ export default async function ProductPage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
             <div>
               <h3 className='text-xl font-bold tracking-tight'>عروض المتاجر</h3>
-              <p className="text-xs text-neutral-400 font-mono mt-1">مقارنة لحظية لأفضل الأسعار المتاحة بالسوق</p>
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-neutral-300 font-mono bg-neutral-800/80 border border-neutral-700 px-3 py-1.5 rounded-lg w-fit">
               <span>📉</span> مرتبة تنازلياً من الأرخص
@@ -127,7 +126,7 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر + الشعار بدون ميلان ومع إزاحة يسار بسيطة + زر المتجر */}
+                  {/* السعر + الشعار + زر المتجر */}
                   <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-neutral-800">
                     
                     {/* السعر والشعار */}
@@ -135,7 +134,6 @@ export default async function ProductPage({ params }: PageProps) {
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* بدون تدوير (شلت الـ rotate) مع إزاحة يسار خفيفة (-translate-x-1) ولون أبيض ناصع */}
                       <img 
                         src="https://commons.wikimedia.org/wiki/Special:FilePath/Saudi_Riyal_Symbol.svg" 
                         alt="ر.س" 

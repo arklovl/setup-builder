@@ -102,7 +102,7 @@ export default async function ProductPage({ params }: PageProps) {
               {storesPrices.map((store, index) => (
                 <div 
                   key={store.id} 
-                  className={`group relative flex items-center justify-between px-5 py-4 rounded-2xl border transition-all gap-4 ${
+                  className={`group relative flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 rounded-2xl border transition-all gap-4 ${
                     index === 0 
                       ? 'bg-neutral-900 border-white/40 shadow-xl shadow-black/50' 
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
@@ -127,26 +127,27 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر + الشعار الرسمي للريال السعودي من ويكيبيديا / ساما */}
-                  <div className="flex items-center space-x-3 space-x-reverse shrink-0">
+                  {/* السعر + الشعار + زر زيارة المتجر مع مسافة آمنة (gap-6) */}
+                  <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-neutral-800">
+                    
+                    {/* السعر والشعار */}
                     <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      
-                      {/* الشعار الرسمي لساما المأخوذ من ويكيبيديا */}
                       <img 
                         src="https://commons.wikimedia.org/wiki/Special:FilePath/Saudi_Riyal_Symbol.svg" 
                         alt="ر.س" 
-                        className="w-5 h-5 object-contain invert brightness-200" 
+                        className="w-6 h-6 object-contain invert brightness-200 scale-x-[-1]" 
                       />
                     </div>
 
+                    {/* زر زيارة المتجر */}
                     <a
                       href={store.store_url || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 ${
                         index === 0
                           ? 'bg-white text-black hover:bg-neutral-200 active:scale-95'
                           : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
@@ -156,6 +157,7 @@ export default async function ProductPage({ params }: PageProps) {
                       <span className="font-mono text-xs">↗</span>
                     </a>
                   </div>
+
                 </div>
               ))}
             </div>

@@ -108,12 +108,12 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر مع الترتيب */}
-                  <div className="flex items-center space-x-3.5 space-x-reverse">
-                    <span className={`px-2.5 py-1 rounded-md font-mono text-xs font-bold shrink-0 ${
-                      index === 0 ? 'bg-white text-black shadow-sm' : 'bg-neutral-800 text-neutral-300'
+                  {/* معلومات المتجر مع الترتيب بدون هاشتاق وبحجم مدمج */}
+                  <div className="flex items-center space-x-3 space-x-reverse">
+                    <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
+                      index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
                     }`}>
-                      #{index + 1}
+                      {index + 1}
                     </span>
                     <div>
                       <div className="flex items-center gap-2.5">

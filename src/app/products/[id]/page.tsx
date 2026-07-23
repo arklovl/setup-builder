@@ -133,11 +133,11 @@ export default async function ProductPage({ params }: PageProps) {
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* استبدال كلمة ر.س بالشعار الجديد */}
+                      {/* الشعار بدلاً من ر.س */}
                       <img 
-                        src="/path-to-your-logo.png" 
-                        alt="Currency Logo" 
-                        className="w-5 h-5 object-contain invert brightness-200" 
+                        src="/logo.png" 
+                        alt="Currency" 
+                        className="w-6 h-6 object-contain" 
                       />
                     </div>
 

@@ -1,53 +1,70 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { createClient } from '@supabase/supabase-js';
 
-// قائمة المنتجات المؤقتة (تأكد أنها متطابقة مع الرئيسية)
-const productsData: Record<string, { name: string; price: number; category: string; description: string; specs: string[] }> = {
-  '1': {
-    name: 'معالج احترافي Core i7',
-    price: 1450,
-    category: 'قطع الغيار',
-    description: 'معالج أداء عالي مخصص للألعاب الثقيلة وبرامج المونتاج والتصميم الهندسي.',
-    specs: ['الجيل الرابع عشر', 'سرعة تصل إلى 5.0 GHz', 'استهلاك طاقة متوازن']
-  },
-  '2': {
-    name: 'كرت شاشة RTX 4080',
-    price: 4200,
-    category: 'كرت الشاشة',
-    description: 'أداء خارق لتشغيل أحدث الألعاب بدقة 4K مع تقنيات تتبع الرسوميات المتقدمة.',
-    specs: ['ذاكرة 16GB GDDR6X', 'دعم تقنية DLSS 3', 'تبريد ثلاثي متطور']
-  },
-  '3': {
-    name: 'لوحة أم للالعاب Z790',
-    price: 1100,
-    category: 'اللوحة الأم',
-    description: 'لوحة أم احترافية تدعم كبريات المعגלات وتمنحك استقراراً كاملاً أثناء كسر السرعة.',
-    specs: ['دعم DDR5', 'منافذ M.2 متعددة للسرعة العالية', 'إضاءة RGB مخصصة']
-  },
-  '4': {
-    name: 'ذاكرة عشوائية 32GB RAM',
-    price: 450,
-    category: 'الذاكرة',
-    description: 'رامات سرعة عالية لتعدد المهام بسلاسة فائقة بدون أي تعليق.',
-    specs: ['سرعة 6000MHz', 'توقيتات ممتازة للاستجابة السريعة', 'هيت سينك لتشتيت الحرارة']
-  }
-};
+// إعداد اتصال Supabase (تأكد أن المفاتيح مطابقة للمشروع عندك أو استبدلها بمتغيرات البيئة)
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-supabase-url.supabase.co',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key'
+);
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  currency: string;
+  category: string;
+  image_url: string | null;
+}
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const productId = resolvedParams.id;
-  const product = productsData[productId];
 
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', productId)
+          .single();
+
+        if (error) {
+          console.error('Error fetching product:', error);
+        } else {
+          setProduct(data);
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProduct();
+  }, [productId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <p className="text-gray-400 animate-pulse">جاري تحميل تفاصيل المنتج...</p>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
       <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold mb-2">عذراً، المنتج غير موجود</h1>
-        <p className="text-gray-400 mb-6">المنتج الذي تبحث عنه غير متوفر أو تم حذفه.</p>
+        <p className="text-gray-400 mb-6">المنتج الذي تبحث عنه غير متوفر في قاعدة البيانات.</p>
         <Link href="/" className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm transition-colors">
           العودة للرئيسية
         </Link>
@@ -69,9 +86,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8">
-          {/* صورة وهمية للمنتج */}
-          <div className="aspect-square bg-neutral-950 border border-neutral-800 rounded-xl flex items-center justify-center">
-            <span className="text-neutral-600 text-lg">صورة المنتج</span>
+          {/* صورة المنتج */}
+          <div className="aspect-square bg-neutral-950 border border-neutral-800 rounded-xl flex items-center justify-center overflow-hidden">
+            {product.image_url ? (
+              <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-neutral-600 text-lg">لا توجد صورة</span>
+            )}
           </div>
 
           {/* تفاصيل المنتج */}
@@ -79,17 +100,12 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             <div>
               <span className="text-xs text-blue-400 uppercase tracking-wider">{product.category}</span>
               <h1 className="text-3xl font-bold mt-2 mb-4">{product.name}</h1>
-              <p className="text-2xl font-semibold text-green-400 mb-6">{product.price} ر.س</p>
-              <p className="text-gray-300 text-sm leading-relaxed mb-6">{product.description}</p>
-
-              <div className="mb-6">
-                <h3 className="text-sm font-semibold text-gray-400 mb-2">المميزات الرئيسية:</h3>
-                <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
-                  {product.specs.map((spec, index) => (
-                    <li key={index}>{spec}</li>
-                  ))}
-                </ul>
-              </div>
+              <p className="text-2xl font-semibold text-green-400 mb-6">
+                {product.price} {product.currency || 'USD'}
+              </p>
+              <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                قطعة أداء احترافية وممتازة تم اختيارها بعناية لتعزيز أداء جهازك المكتبي وتوفير أفضل تجربة استجابة وسرعة.
+              </p>
             </div>
 
             {/* زر الشراء والكمية */}

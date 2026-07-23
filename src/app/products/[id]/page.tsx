@@ -108,17 +108,17 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: اسم المتجر وعلى يساره مباشرة رقم الترتيب */}
+                  {/* معلومات المتجر: الرقم أولاً (على اليمين) ثم اسم المتجر (على اليسار) */}
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-base text-white tracking-wide">
-                          {store.store_name}
-                        </span>
                         <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
                           index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
                         }`}>
                           {index + 1}
+                        </span>
+                        <span className="font-bold text-base text-white tracking-wide">
+                          {store.store_name}
                         </span>
                       </div>
                       <span className="text-xs text-neutral-400 font-mono mt-0.5 block">

@@ -108,7 +108,7 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: الرقم أولاً (على اليمين) ثم اسم المتجر (على اليسار) */}
+                  {/* معلومات المتجر: الرقم أولاً ثم اسم المتجر */}
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div>
                       <div className="flex items-center gap-2">
@@ -127,13 +127,18 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر وزر الشراء */}
-                  <div className="flex items-center space-x-6 space-x-reverse shrink-0">
-                    <div className="text-left sm:text-right font-mono">
+                  {/* السعر والشعار وزر الشراء */}
+                  <div className="flex items-center space-x-4 space-x-reverse shrink-0">
+                    <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      <span className="text-xs font-semibold text-neutral-400 uppercase mr-1.5">ر.س</span>
+                      {/* استبدال كلمة ر.س بالشعار الجديد */}
+                      <img 
+                        src="/path-to-your-logo.png" 
+                        alt="Currency Logo" 
+                        className="w-5 h-5 object-contain invert brightness-200" 
+                      />
                     </div>
 
                     <a

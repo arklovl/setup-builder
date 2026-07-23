@@ -108,7 +108,7 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: الرقم أولاً ثم اسم المتجر */}
+                  {/* معلومات المتجر */}
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div>
                       <div className="flex items-center gap-2">
@@ -127,17 +127,18 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر وشعارك الحقيقي (الصورة) بجانبه */}
+                  {/* السعر + الشعار الرسمي للريال السعودي من ويكيبيديا / ساما */}
                   <div className="flex items-center space-x-3 space-x-reverse shrink-0">
                     <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* استخدمنا صورة شعارك الحقيقية مباشرة لضمان التطابق التام */}
+                      
+                      {/* الشعار الرسمي لساما المأخوذ من ويكيبيديا */}
                       <img 
-                        src="https://pbs.twimg.com/media/GkOipmnWoAA_lME.jpg" 
-                        alt="SAR" 
-                        className="w-6 h-6 object-contain rounded invert brightness-200" 
+                        src="https://commons.wikimedia.org/wiki/Special:FilePath/Saudi_Riyal_Symbol.svg" 
+                        alt="ر.س" 
+                        className="w-5 h-5 object-contain invert brightness-200" 
                       />
                     </div>
 

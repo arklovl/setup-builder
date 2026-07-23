@@ -108,16 +108,11 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: ترتيب مباشر وثابت بدون عكس */}
-                  <div className="flex items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
+                  {/* معلومات المتجر: اسم المتجر يمين ورقم الترتيب يسار بدون وسم الأرخص */}
+                  <div className="flex items-center w-full max-w-xs">
+                    <div className="w-full">
+                      <div className="flex items-center justify-between w-full">
                         <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
-                        {index === 0 && (
-                          <span className="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
-                            🔥 الأرخص
-                          </span>
-                        )}
                         <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
                           index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
                         }`}>
@@ -129,7 +124,7 @@ export default async function ProductPage({ params }: PageProps) {
                   </div>
 
                   {/* السعر وزر الشراء */}
-                  <div className="flex items-center space-x-6 space-x-reverse">
+                  <div className="flex items-center space-x-6 space-x-reverse shrink-0">
                     <div className="text-left sm:text-right font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}

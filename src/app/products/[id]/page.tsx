@@ -127,13 +127,13 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر والشعار وزر زيارة المتجر */}
+                  {/* السعر وشعارك الجديد وزر زيارة المتجر */}
                   <div className="flex items-center space-x-4 space-x-reverse shrink-0">
                     <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* شعارك الخاص المدمج */}
+                      {/* شعارك المخصص المرسوم بدقة */}
                       <svg className="w-5 h-5 text-white object-contain" viewBox="0 0 960 960" fill="currentColor">
                         <path d="M290 80h100v300h280V80h100v800H670V580H390v300H290V80zm100 400h280v-80H390v80z"/>
                       </svg>

@@ -1,81 +1,126 @@
-import { createClient } from '@supabase/supabase-js';
-import { notFound } from 'next/navigation';
+'use client';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
+import { use, useState } from 'react';
+import Link from 'next/link';
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+// قائمة المنتجات المؤقتة (تأكد أنها متطابقة مع الرئيسية)
+const productsData: Record<string, { name: string; price: number; category: string; description: string; specs: string[] }> = {
+  '1': {
+    name: 'معالج احترافي Core i7',
+    price: 1450,
+    category: 'قطع الغيار',
+    description: 'معالج أداء عالي مخصص للألعاب الثقيلة وبرامج المونتاج والتصميم الهندسي.',
+    specs: ['الجيل الرابع عشر', 'سرعة تصل إلى 5.0 GHz', 'استهلاك طاقة متوازن']
+  },
+  '2': {
+    name: 'كرت شاشة RTX 4080',
+    price: 4200,
+    category: 'كرت الشاشة',
+    description: 'أداء خارق لتشغيل أحدث الألعاب بدقة 4K مع تقنيات تتبع الرسوميات المتقدمة.',
+    specs: ['ذاكرة 16GB GDDR6X', 'دعم تقنية DLSS 3', 'تبريد ثلاثي متطور']
+  },
+  '3': {
+    name: 'لوحة أم للالعاب Z790',
+    price: 1100,
+    category: 'اللوحة الأم',
+    description: 'لوحة أم احترافية تدعم كبريات المعגלات وتمنحك استقراراً كاملاً أثناء كسر السرعة.',
+    specs: ['دعم DDR5', 'منافذ M.2 متعددة للسرعة العالية', 'إضاءة RGB مخصصة']
+  },
+  '4': {
+    name: 'ذاكرة عشوائية 32GB RAM',
+    price: 450,
+    category: 'الذاكرة',
+    description: 'رامات سرعة عالية لتعدد المهام بسلاسة فائقة بدون أي تعليق.',
+    specs: ['سرعة 6000MHz', 'توقيتات ممتازة للاستجابة السريعة', 'هيت سينك لتشتيت الحرارة']
+  }
+};
 
-  const { data: product, error: productError } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
-    .single();
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const productId = resolvedParams.id;
+  const product = productsData[productId];
 
-  if (productError || !product) {
-    notFound();
+  const [quantity, setQuantity] = useState(1);
+  const [added, setAdded] = useState(false);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+        <h1 className="text-2xl font-bold mb-2">عذراً، المنتج غير موجود</h1>
+        <p className="text-gray-400 mb-6">المنتج الذي تبحث عنه غير متوفر أو تم حذفه.</p>
+        <Link href="/" className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg text-sm transition-colors">
+          العودة للرئيسية
+        </Link>
+      </div>
+    );
   }
 
-  const { data: offers } = await supabase
-    .from('product_offers')
-    .select('*')
-    .eq('product_id', id);
+  const handleAddToCart = () => {
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
-    <main className="min-h-screen bg-gray-950 text-white p-6 md:p-12">
+    <main className="min-h-screen bg-neutral-950 text-white p-6 md:p-12">
       <div className="max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-8 items-center bg-gray-900/50 p-6 rounded-2xl border border-gray-800">
-          <img 
-            src={product.image_url} 
-            alt={product.name} 
-            className="w-64 h-64 object-cover rounded-xl bg-gray-900 shadow-lg border border-gray-800" 
-          />
-          <div className="space-y-3 text-center md:text-right">
-            <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              {product.description || "اختر المتجر المناسب لك واستعرض تفاصيل الشراء المتاحة لهذا المنتج."}
-            </p>
+        {/* زر العودة */}
+        <Link href="/" className="inline-flex items-center text-sm text-gray-400 hover:text-white mb-8 transition-colors">
+          ← العودة للرئيسية
+        </Link>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-neutral-900 border border-neutral-800 rounded-2xl p-6 md:p-8">
+          {/* صورة وهمية للمنتج */}
+          <div className="aspect-square bg-neutral-950 border border-neutral-800 rounded-xl flex items-center justify-center">
+            <span className="text-neutral-600 text-lg">صورة المنتج</span>
           </div>
-        </div>
 
-        <div className="mt-10 space-y-4">
-          <h2 className="text-xl font-semibold border-b border-gray-800 pb-3">
-            المتاجر التي توفر المنتج
-          </h2>
+          {/* تفاصيل المنتج */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-blue-400 uppercase tracking-wider">{product.category}</span>
+              <h1 className="text-3xl font-bold mt-2 mb-4">{product.name}</h1>
+              <p className="text-2xl font-semibold text-green-400 mb-6">{product.price} ر.س</p>
+              <p className="text-gray-300 text-sm leading-relaxed mb-6">{product.description}</p>
 
-          {offers && offers.length > 0 ? (
-            <div className="space-y-3">
-              {offers.map((offer) => (
-                <div 
-                  key={offer.id} 
-                  className="flex flex-col sm:flex-row justify-between items-center bg-gray-900 p-4 rounded-xl border border-gray-800 gap-4"
-                >
-                  <div>
-                    <span className="font-bold text-lg text-gray-200">{offer.store_name}</span>
-                    {offer.price && (
-                      <span className="block text-green-400 font-semibold mt-1">
-                        {offer.price} ريال
-                      </span>
-                    )}
-                  </div>
-                  
-                  <a 
-                    href={offer.affiliate_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium transition-colors shadow-lg shadow-blue-600/20"
-                  >
-                    زيارة المتجر وشراء المنتج
-                  </a>
-                </div>
-              ))}
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-gray-400 mb-2">المميزات الرئيسية:</h3>
+                <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
+                  {product.specs.map((spec, index) => (
+                    <li key={index}>{spec}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          ) : (
-            <p className="text-gray-500 text-center py-8">لا توجد متاجر مضافة لهذا المنتج حالياً.</p>
-          )}
+
+            {/* زر الشراء والكمية */}
+            <div className="space-y-4 pt-4 border-t border-neutral-800">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-400">الكمية:</span>
+                <div className="flex items-center border border-neutral-700 rounded-lg overflow-hidden">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-3 py-1 bg-neutral-800 hover:bg-neutral-700 text-white"
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-1 text-sm">{quantity}</span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-3 py-1 bg-neutral-800 hover:bg-neutral-700 text-white"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={handleAddToCart}
+                className="w-full py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition-colors"
+              >
+                {added ? 'تمت الإضافة للسلة بنجاح! ✓' : 'إضافة إلى السلة'}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </main>

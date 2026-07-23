@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* قسم مقارنة الأسعار بين المتاجر مع شعار العملة */}
+        {/* قسم مقارنة الأسعار بين المتاجر (الجديد والمحسّن) */}
         <div className="mt-16 bg-neutral-950 border border-neutral-900 rounded-3xl p-8 md:p-10">
           <div className="flex items-center justify-between mb-8">
             <h3 className='text-2xl font-bold'>مقارنة الأسعار في المتاجر</h3>
@@ -126,15 +126,9 @@ export default async function ProductPage({ params }: PageProps) {
                   </div>
 
                   <div className="flex items-center space-x-4 space-x-reverse">
-                    <div className="flex items-center space-x-1.5 space-x-reverse">
-                      <span className="text-2xl font-bold font-mono text-green-400">
-                        {store.price}
-                      </span>
-                      {/* شعار أو أيقونة الريال السعودي */}
-                      <span className="inline-flex items-center justify-center px-1.5 py-0.5 bg-neutral-900 border border-neutral-800 rounded text-[11px] font-bold text-gray-400 font-mono tracking-tighter">
-                        ر.س
-                      </span>
-                    </div>
+                    <span className="text-2xl font-bold font-mono text-green-400">
+                      {store.price} <span className="text-sm font-sans text-gray-500">ر.س</span>
+                    </span>
 
                     <a
                       href={store.store_url || '#'}

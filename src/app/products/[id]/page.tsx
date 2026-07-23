@@ -108,21 +108,21 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: اسم المتجر أولاً، ثم الرقم على اليسار تماماً */}
+                  {/* معلومات المتجر: ترتيب العناصر طبيعي ليكون الرقم على اليسار تماماً بعد اسم المتجر */}
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div>
-                      <div className="flex items-center flex-row-reverse justify-end gap-2.5">
-                        <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
-                          index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
-                        }`}>
-                          {index + 1}
-                        </span>
+                      <div className="flex items-center gap-2.5">
                         <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
                         {index === 0 && (
                           <span className="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
                             🔥 الأرخص
                           </span>
                         )}
+                        <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
+                          index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
+                        }`}>
+                          {index + 1}
+                        </span>
                       </div>
                       <span className="text-xs text-neutral-400 font-mono mt-0.5 block">متوفر للشحن السريع</span>
                     </div>

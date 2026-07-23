@@ -127,18 +127,18 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر وشعارك الشخصي (المائل الهندسي المتداخل) بجانبه */}
+                  {/* السعر وشعارك الحقيقي (الصورة) بجانبه */}
                   <div className="flex items-center space-x-3 space-x-reverse shrink-0">
                     <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* شعارك الحقيقي المرسوم بدقة SVG */}
-                      <svg className="w-6 h-6 text-white object-contain" viewBox="0 0 800 800" fill="currentColor">
-                        <path d="M305 70 L405 70 L405 320 L585 180 L705 250 L485 415 L705 580 L585 650 L405 510 L405 730 L305 730 Z" />
-                        <path d="M100 220 L200 150 L380 415 L200 680 L100 610 L240 415 Z" />
-                        <path d="M230 360 L570 360 L570 470 L230 470 Z" />
-                      </svg>
+                      {/* استخدمنا صورة شعارك الحقيقية مباشرة لضمان التطابق التام */}
+                      <img 
+                        src="https://pbs.twimg.com/media/GkOipmnWoAA_lME.jpg" 
+                        alt="SAR" 
+                        className="w-6 h-6 object-contain rounded invert brightness-200" 
+                      />
                     </div>
 
                     <a

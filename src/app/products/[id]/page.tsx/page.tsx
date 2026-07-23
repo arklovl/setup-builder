@@ -1,73 +1,34 @@
-'use client';
-
-import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  price: number | string;
-  currency?: string;
-  image_url?: string | null;
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
 }
 
-export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = use(params);
+export default async function ProductPage({ params }: PageProps) {
+  const resolvedParams = await params;
   const productId = resolvedParams.id;
 
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
+  // جلب المنتج مباشرة من Supabase في السيرفر
+  const { data: product, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('id', productId)
+    .single();
 
-  useEffect(() => {
-    async function fetchProduct() {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', productId)
-        .single();
-
-      if (error) {
-        console.error('Error fetching product from Supabase:', error);
-      } else {
-        setProduct(data);
-      }
-      setLoading(false);
-    }
-
-    if (productId) {
-      fetchProduct();
-    }
-  }, [productId]);
-
-  if (loading) {
+  if (error || !product) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center font-mono text-sm">
-        <p className="animate-pulse">جاري تحميل تفاصيل المنتج...</p>
-      </div>
-    );
-  }
-
-  if (!product) {
-    return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+      <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold mb-2">المنتج غير موجود</h1>
-        <p className="text-gray-400 mb-6 text-sm font-mono">لم يتم العثور على هذا المنتج في قاعدة البيانات.</p>
+        <p className="text-gray-400 mb-6 text-sm font-mono">لم نتمكن من العثور على هذا المنتج في قاعدة البيانات.</p>
         <Link href="/" className="px-4 py-2 bg-neutral-900 hover:bg-neutral-800 border border-gray-800 rounded-lg text-sm transition-colors">
           العودة للرئيسية
         </Link>
-      </div>
+      </main>
     );
   }
-
-  const handleAddToCart = () => {
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
 
   return (
     <main className="min-h-screen bg-black text-white p-6 md:p-12 flex flex-col justify-between">
@@ -100,33 +61,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               </p>
             </div>
 
-            {/* الأزرار والكمية */}
-            <div className="space-y-4 pt-4 border-t border-neutral-900">
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-400">الكمية:</span>
-                <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-black">
-                  <button 
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-3 py-1 bg-neutral-900 hover:bg-neutral-800 text-white transition-colors"
-                  >
-                    -
-                  </button>
-                  <span className="px-4 py-1 text-sm font-mono">{quantity}</span>
-                  <button 
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-3 py-1 bg-neutral-900 hover:bg-neutral-800 text-white transition-colors"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <button
-                onClick={handleAddToCart}
-                className="w-full py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm"
+            {/* معلومات سريعة */}
+            <div className="pt-4 border-t border-neutral-900">
+              <Link
+                href="/"
+                className="block w-full py-3 bg-white text-black text-center font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm"
               >
-                {added ? 'تمت الإضافة للسلة بنجاح! ✓' : 'إضافة إلى السلة'}
-              </button>
+                العودة للتسوق واختيار القطع
+              </Link>
             </div>
           </div>
         </div>

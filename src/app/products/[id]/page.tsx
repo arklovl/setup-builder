@@ -20,10 +20,10 @@ export default async function ProductPage({ params }: PageProps) {
 
   if (error || !product) {
     return (
-      <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
+      <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-6">
         <h1 className="text-3xl font-bold mb-3">المنتج غير موجود</h1>
         <p className="text-gray-400 mb-8 text-sm font-mono">لم نتمكن من العثور على هذا المنتج في قاعدة البيانات.</p>
-        <Link href="/" className="px-6 py-3 bg-neutral-900 hover:bg-neutral-800 border border-gray-800 rounded-xl text-sm transition-colors">
+        <Link href="/" className="px-6 py-3 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-xl text-sm transition-colors">
           العودة للرئيسية
         </Link>
       </main>
@@ -38,127 +38,137 @@ export default async function ProductPage({ params }: PageProps) {
     .order('price', { ascending: true });
 
   return (
-    <main className="min-h-screen bg-black text-white p-6 md:p-12 flex flex-col">
-      <div className="max-w-6xl mx-auto w-full flex-grow">
+    <main className="min-h-screen bg-neutral-950 text-white selection:bg-emerald-500 selection:text-black p-4 md:p-10">
+      <div className="max-w-5xl mx-auto space-y-8">
         
-        {/* الصندوق الرئيسي للمنتج */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-neutral-950 border border-neutral-900 rounded-3xl p-8 md:p-10 shadow-2xl shadow-black/30">
+        {/* زر العودة */}
+        <div>
+          <Link href="/" className="inline-flex items-center text-xs font-mono text-neutral-400 hover:text-white transition-colors bg-neutral-900/80 border border-neutral-800 px-4 py-2 rounded-lg group">
+            <span className="ml-2 group-hover:-translate-x-1 transition-transform">→</span> العودة للمنتجات
+          </Link>
+        </div>
+
+        {/* كارت المنتج الرئيسي */}
+        <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
-          {/* الصورة */}
-          <div className="flex flex-col">
-            <Link href="/" className="inline-flex items-center text-sm text-gray-400 hover:text-white mb-6 transition-colors font-medium group w-fit">
-              <span className="mr-2 group-hover:mr-3 transition-all">←</span> العودة
-            </Link>
-            
-            <div className="aspect-square bg-black border border-neutral-900 rounded-2xl flex items-center justify-center overflow-hidden p-4">
-              {product.image_url ? (
-                <img src={product.image_url} alt={product.name} className="w-full h-full object-contain" />
-              ) : (
-                <span className="text-neutral-700 text-base font-mono">لا توجد صورة</span>
-              )}
-            </div>
+          {/* صورة المنتج */}
+          <div className="md:col-span-5 aspect-square bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center p-6 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            {product.image_url ? (
+              <img src={product.image_url} alt={product.name} className="w-full h-full object-contain drop-shadow-2xl" />
+            ) : (
+              <span className="text-neutral-600 text-xs font-mono">لا توجد صورة</span>
+            )}
           </div>
 
-          {/* التفاصيل */}
-          <div className="flex flex-col pt-12">
-            <span className="text-sm text-blue-400 uppercase font-mono tracking-widest">{product.category}</span>
-            <h1 className="text-4xl md:text-5xl font-extrabold mt-3 mb-6 tracking-tight">{product.name}</h1>
-            
-            <div className="space-y-6 text-gray-300 text-base leading-relaxed mb-8 border-y border-neutral-900 py-8">
-              <h4 className='font-bold text-white text-lg'>وصف المنتج</h4>
-              <p className="text-gray-300 text-base leading-relaxed text-justify">
-                {product.description || "قطعة أداء احترافية فائقة متوفرة الآن مقارنة الأسعار فيها لتجد أرخص سعر في السوق السعودي."}
-              </p>
+          {/* تفاصيل المنتج */}
+          <div className="md:col-span-7 flex flex-col justify-center space-y-4">
+            <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
+              <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono rounded-full uppercase tracking-wider">
+                {product.category || 'HARDWARE'}
+              </span>
             </div>
+            
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
+              {product.name}
+            </h1>
+            
+            <p className="text-neutral-400 text-sm leading-relaxed text-justify">
+              {product.description || "قطعة أداء احترافية متوفرة في السوق السعودي. قارن الأسعار أدناه لتجد العرض الأنسب لجهازك."}
+            </p>
 
-            {/* الأزرار */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-auto">
-               <button className="w-full py-4 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm flex items-center justify-center">
-                  <span className='mr-2'>🔔</span> تتبع انخفاض السعر
-                </button>
-                <Link
-                  href="/"
-                  className="w-full py-4 bg-neutral-800 text-white text-center font-semibold rounded-xl hover:bg-neutral-700 transition-colors text-sm flex items-center justify-center"
-                >
-                  متابعة التسوق
-                </Link>
+            <div className="pt-4 flex flex-wrap gap-3">
+              <button className="px-5 py-3 bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold rounded-xl border border-neutral-700 transition-all flex items-center gap-2">
+                <span>🔔</span> تتبع انخفاض السعر
+              </button>
             </div>
           </div>
         </div>
 
-        {/* قسم مقارنة الأسعار بين المتاجر (الجديد والمحسّن) */}
-        <div className="mt-16 bg-neutral-950 border border-neutral-900 rounded-3xl p-8 md:p-10">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className='text-2xl font-bold'>مقارنة الأسعار في المتاجر</h3>
-            <span className="text-xs text-green-400 font-mono bg-green-950/40 border border-green-900/50 px-3 py-1.5 rounded-full">
-              مترتبة من الأرخص للأغلى 📉
+        {/* قسم جدول الأسعار الاحترافي */}
+        <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
+            <div>
+              <h3 className='text-xl font-bold tracking-tight'>عروض المتاجر</h3>
+              <p className="text-xs text-neutral-400 font-mono mt-1">مقارنة لحظية لأفضل الأسعار المتاحة بالسوق</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+              <span>📉</span> مرتبة تنازلياً من الأرخص
             </span>
           </div>
 
           {storesPrices && storesPrices.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {storesPrices.map((store, index) => (
                 <div 
                   key={store.id} 
-                  className={`flex items-center justify-between p-5 rounded-2xl border transition-all ${
+                  className={`group relative flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 rounded-2xl border transition-all gap-4 ${
                     index === 0 
-                      ? 'bg-neutral-900/90 border-green-500/50 shadow-lg shadow-green-950/20' 
-                      : 'bg-black/40 border-neutral-900 hover:border-neutral-800'
+                      ? 'bg-gradient-to-r from-emerald-950/30 via-neutral-900/90 to-neutral-900/90 border-emerald-500/40 shadow-lg shadow-emerald-950/20' 
+                      : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
+                  {/* معلومات المتجر */}
                   <div className="flex items-center space-x-4 space-x-reverse">
-                    <span className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold ${
-                      index === 0 ? 'bg-green-500 text-black' : 'bg-neutral-800 text-gray-400'
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono text-xs font-bold shrink-0 ${
+                      index === 0 ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20' : 'bg-neutral-800 text-neutral-400'
                     }`}>
                       #{index + 1}
-                    </span>
+                    </div>
                     <div>
-                      <h4 className="font-bold text-lg text-white flex items-center gap-2">
-                        {store.store_name}
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
                         {index === 0 && (
-                          <span className="text-[10px] bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-md font-sans">
-                            السعر الأفضل 🔥
+                          <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500 text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
+                            🔥 الأرخص
                           </span>
                         )}
-                      </h4>
-                      <p className="text-xs text-gray-500 font-mono mt-0.5">متوفر وجاهز للشحن</p>
+                      </div>
+                      <span className="text-xs text-emerald-500/80 font-mono mt-0.5 block">متوفر للشحن السريع</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-4 space-x-reverse">
-                    <span className="text-2xl font-bold font-mono text-green-400">
-                      {store.price} <span className="text-sm font-sans text-gray-500">ر.س</span>
-                    </span>
+                  {/* السعر وزر الشراء */}
+                  <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse pt-2 sm:pt-0 border-t sm:border-t-0 border-neutral-800/60">
+                    <div className="text-left sm:text-right">
+                      <div className="flex items-baseline gap-1.5 font-mono">
+                        <span className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                          {store.price}
+                        </span>
+                        <span className="text-xs font-semibold text-emerald-400 uppercase">ر.س</span>
+                      </div>
+                    </div>
 
                     <a
                       href={store.store_url || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                      className={`px-5 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                         index === 0
-                          ? 'bg-green-500 text-black hover:bg-green-400'
-                          : 'bg-neutral-800 text-white hover:bg-neutral-700'
+                          ? 'bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/25 active:scale-95'
+                          : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
                       }`}
                     >
-                      اذهب للمتجر ↗
+                      <span>زيارة المتجر</span>
+                      <span className="font-mono">↗</span>
                     </a>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 text-gray-500 font-mono text-sm border border-dashed border-neutral-800 rounded-2xl">
-              لم يتم إقرار متاجر لهذا المنتج بعد. أضف أسعار في جدول product_prices في Supabase لتظهر هنا.
+            <div className="text-center py-12 text-neutral-500 font-mono text-xs border border-dashed border-neutral-800 rounded-2xl bg-neutral-950/30">
+              لا توجد أسعار مسجلة لهذا المنتج حالياً. أضف روابط المتاجر والأسعار من لوحة تحكم Supabase.
             </div>
           )}
         </div>
 
       </div>
       
-      <footer className="mt-16 text-center py-6 border-t border-neutral-900">
-          <p className="text-xs text-neutral-500 font-mono mb-2">
-            © 2026 SETUP BUILDER. ALL RIGHTS RESERVED.
-          </p>
+      <footer className="mt-20 text-center py-6 border-t border-neutral-900">
+        <p className="text-[11px] text-neutral-600 font-mono tracking-widest uppercase">
+          © 2026 SETUP BUILDER. ALL RIGHTS RESERVED.
+        </p>
       </footer>
     </main>
   );

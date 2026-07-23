@@ -22,7 +22,7 @@ export default async function ProductPage({ params }: PageProps) {
     return (
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-6">
         <h1 className="text-3xl font-bold mb-3">المنتج غير موجود</h1>
-        <p className="text-gray-400 mb-8 text-sm font-mono">لم نتمكن من العثور على هذا المنتج في قاعدة البيانات.</p>
+        <p className="text-neutral-400 mb-8 text-sm font-mono">لم نتمكن من العثور على هذا المنتج في قاعدة البيانات.</p>
         <Link href="/" className="px-6 py-3 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-xl text-sm transition-colors">
           العودة للرئيسية
         </Link>
@@ -38,7 +38,7 @@ export default async function ProductPage({ params }: PageProps) {
     .order('price', { ascending: true });
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-white selection:bg-emerald-500 selection:text-black p-4 md:p-10">
+    <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
       <div className="max-w-5xl mx-auto space-y-8">
         
         {/* زر العودة */}
@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: PageProps) {
           
           {/* صورة المنتج */}
           <div className="md:col-span-5 aspect-square bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center p-6 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             {product.image_url ? (
               <img src={product.image_url} alt={product.name} className="w-full h-full object-contain drop-shadow-2xl" />
             ) : (
@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: PageProps) {
           {/* تفاصيل المنتج */}
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
             <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
-              <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono rounded-full uppercase tracking-wider">
+              <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'HARDWARE'}
               </span>
             </div>
@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: PageProps) {
               <h3 className='text-xl font-bold tracking-tight'>عروض المتاجر</h3>
               <p className="text-xs text-neutral-400 font-mono mt-1">مقارنة لحظية لأفضل الأسعار المتاحة بالسوق</p>
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-mono bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+            <span className="inline-flex items-center gap-1.5 text-xs text-neutral-300 font-mono bg-neutral-800/80 border border-neutral-700 px-3 py-1.5 rounded-lg w-fit">
               <span>📉</span> مرتبة تنازلياً من الأرخص
             </span>
           </div>
@@ -104,14 +104,14 @@ export default async function ProductPage({ params }: PageProps) {
                   key={store.id} 
                   className={`group relative flex flex-col sm:flex-row sm:items-center justify-between p-4 md:p-5 rounded-2xl border transition-all gap-4 ${
                     index === 0 
-                      ? 'bg-gradient-to-r from-emerald-950/30 via-neutral-900/90 to-neutral-900/90 border-emerald-500/40 shadow-lg shadow-emerald-950/20' 
+                      ? 'bg-neutral-900 border-white/40 shadow-xl shadow-black/50' 
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
                   {/* معلومات المتجر */}
                   <div className="flex items-center space-x-4 space-x-reverse">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono text-xs font-bold shrink-0 ${
-                      index === 0 ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20' : 'bg-neutral-800 text-neutral-400'
+                      index === 0 ? 'bg-white text-black shadow-lg shadow-white/10' : 'bg-neutral-800 text-neutral-400'
                     }`}>
                       #{index + 1}
                     </div>
@@ -119,12 +119,12 @@ export default async function ProductPage({ params }: PageProps) {
                       <div className="flex items-center gap-2.5 flex-wrap">
                         <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
                         {index === 0 && (
-                          <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-500 text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
+                          <span className="inline-flex items-center gap-1 text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded shadow-sm">
                             🔥 الأرخص
                           </span>
                         )}
                       </div>
-                      <span className="text-xs text-emerald-500/80 font-mono mt-0.5 block">متوفر للشحن السريع</span>
+                      <span className="text-xs text-neutral-400 font-mono mt-0.5 block">متوفر للشحن السريع</span>
                     </div>
                   </div>
 
@@ -135,7 +135,7 @@ export default async function ProductPage({ params }: PageProps) {
                         <span className="text-2xl md:text-3xl font-black text-white tracking-tight">
                           {store.price}
                         </span>
-                        <span className="text-xs font-semibold text-emerald-400 uppercase">ر.س</span>
+                        <span className="text-xs font-semibold text-neutral-400 uppercase">ر.س</span>
                       </div>
                     </div>
 
@@ -145,7 +145,7 @@ export default async function ProductPage({ params }: PageProps) {
                       rel="noopener noreferrer"
                       className={`px-5 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                         index === 0
-                          ? 'bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/25 active:scale-95'
+                          ? 'bg-white text-black hover:bg-neutral-200 shadow-lg shadow-white/10 active:scale-95'
                           : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
                       }`}
                     >

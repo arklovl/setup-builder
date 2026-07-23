@@ -127,7 +127,7 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر + الشعار (بحجم أبيض صافي ومتناسق) + زر المتجر */}
+                  {/* السعر + الشعار الموجه يساراً والأبيض بالكامل + زر المتجر */}
                   <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-neutral-800">
                     
                     {/* السعر والشعار */}
@@ -135,11 +135,11 @@ export default async function ProductPage({ params }: PageProps) {
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* تم تصغير الحجم إلى w-5 h-5 وزيادة السطوع ليكون أبيض ناصع */}
+                      {/* تعديل زاوية الدوران والانعكاس لتظبط اللفة يساراً مع لون أبيض ناصع 100% */}
                       <img 
                         src="https://commons.wikimedia.org/wiki/Special:FilePath/Saudi_Riyal_Symbol.svg" 
                         alt="ر.س" 
-                        className="w-5 h-5 object-contain invert brightness-[100] contrast-200 scale-x-[-1]" 
+                        className="w-5 h-5 object-contain invert brightness-[200] contrast-200 -rotate-6" 
                       />
                     </div>
 

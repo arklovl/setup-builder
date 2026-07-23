@@ -108,19 +108,18 @@ export default async function ProductPage({ params }: PageProps) {
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر: اسم المتجر يمين ورقم الترتيب يسار بدون وسم الأرخص */}
-                  <div className="flex items-center w-full max-w-xs">
-                    <div className="w-full">
-                      <div className="flex items-center justify-between w-full">
-                        <span className="font-bold text-base text-white tracking-wide">{store.store_name}</span>
-                        <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
-                          index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
-                        }`}>
-                          {index + 1}
-                        </span>
-                      </div>
+                  {/* معلومات المتجر: اسم المتجر وتحته الوصف على اليمين، والرقم في أقصى اليسار */}
+                  <div className="flex items-center justify-between w-full max-w-sm">
+                    <div>
+                      <span className="font-bold text-base text-white tracking-wide block">{store.store_name}</span>
                       <span className="text-xs text-neutral-400 font-mono mt-0.5 block">متوفر للشحن السريع</span>
                     </div>
+                    
+                    <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded shrink-0 ${
+                      index === 0 ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'
+                    }`}>
+                      {index + 1}
+                    </span>
                   </div>
 
                   {/* السعر وزر الشراء */}

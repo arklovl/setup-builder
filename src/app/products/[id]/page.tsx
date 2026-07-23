@@ -127,18 +127,16 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر وشعار العملة الخاص بك وزر الشراء */}
+                  {/* السعر وشعارك الجديد (SVG مدمج مائلاً للأعلى باحترافية) وزر الشراء */}
                   <div className="flex items-center space-x-4 space-x-reverse shrink-0">
-                    <div className="flex items-center gap-2 font-mono">
+                    <div className="flex items-center gap-1.5 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* شعارك الخاص (تأكد أن اسم الصورة في مجلد public هو logo.png أو غيره هنا) */}
-                      <img 
-                        src="/logo.png" 
-                        alt="Currency Logo" 
-                        className="w-5 h-5 object-contain invert" 
-                      />
+                      {/* شعارك المخصص المرسوم بـ SVG لضمان ظهوره بشكل نقي وثابت */}
+                      <svg className="w-5 h-5 text-white object-contain" viewBox="0 0 960 960" fill="currentColor">
+                        <path d="M290 80h100v300h280V80h100v800H670V580H390v300H290V80zm100 400h280v-80H390v80z"/>
+                      </svg>
                     </div>
 
                     <a
@@ -147,7 +145,7 @@ export default async function ProductPage({ params }: PageProps) {
                       rel="noopener noreferrer"
                       className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                         index === 0
-                          ? 'bg-white text-black hover:bg-neutral-200 active:scale-95'
+                          ? 'bg-white text-white hover:bg-neutral-200 active:scale-95'
                           : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
                       }`}
                     >

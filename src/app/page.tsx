@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 interface Product {
@@ -14,6 +15,7 @@ interface Product {
 const QUICK_TAGS = ['GPUs', 'Mice', 'Keyboards', 'Monitors', 'Audio']
 
 export default function Home() {
+  const router = useRouter()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [query, setQuery] = useState('')
@@ -103,7 +105,7 @@ export default function Home() {
               stroke="currentColor" 
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
 
             <input 
@@ -119,6 +121,7 @@ export default function Home() {
             <span className="absolute right-4 text-xs font-mono text-gray-400 bg-neutral-900 border border-white/20 px-2 py-1 rounded">
               ⌘K
             </span>
+
           </div>
 
           {/* قائمة النتائج الساحبة من Supabase */}
@@ -127,6 +130,7 @@ export default function Home() {
               {filteredProducts.map((product) => (
                 <div 
                   key={product.id}
+                  onClick={() => router.push(`/products/${product.id}`)}
                   className="flex items-center justify-between px-5 py-3.5 hover:bg-neutral-900 border-b border-white/10 last:border-0 cursor-pointer transition-colors"
                 >
                   <div>

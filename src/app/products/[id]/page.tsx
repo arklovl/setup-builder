@@ -127,18 +127,17 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر وشعار الريال السعودي الرسمي بجانبه */}
-                  <div className="flex items-center space-x-4 space-x-reverse shrink-0">
-                    <div className="flex items-center gap-1.5 font-mono">
+                  {/* السعر وشعارك الشخصي (المائل الهندسي المتداخل) بجانبه */}
+                  <div className="flex items-center space-x-3 space-x-reverse shrink-0">
+                    <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* شعار رمز العملة الرسمي المعتمد */}
-                      <svg className="w-6 h-6 text-white object-contain" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19" />
-                        <path d="M4 11h11.5a2.5 2.5 0 0 1 0 5H4" />
-                        <path d="M12 16l4 5" />
-                        <line x1="8" y1="7" x2="16" y2="7" />
+                      {/* شعارك الحقيقي المرسوم بدقة SVG */}
+                      <svg className="w-6 h-6 text-white object-contain" viewBox="0 0 800 800" fill="currentColor">
+                        <path d="M305 70 L405 70 L405 320 L585 180 L705 250 L485 415 L705 580 L585 650 L405 510 L405 730 L305 730 Z" />
+                        <path d="M100 220 L200 150 L380 415 L200 680 L100 610 L240 415 Z" />
+                        <path d="M230 360 L570 360 L570 470 L230 470 Z" />
                       </svg>
                     </div>
 

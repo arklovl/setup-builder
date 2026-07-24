@@ -127,7 +127,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* شريط البحث مع الحواف المنحنية بالكامل */}
+        {/* شريط البحث بدون علامة الكيبورد */}
         <div className="relative w-full">
           {isFocused && (
             <>
@@ -158,13 +158,8 @@ export default function Home() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="وش تفكر فيه اليوم؟"
-              className="w-full text-base sm:text-lg pl-14 pr-16 py-3.5 bg-transparent text-gray-100 placeholder:text-gray-500 rounded-full focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
+              className="w-full text-base sm:text-lg pl-14 pr-6 py-3.5 bg-transparent text-gray-100 placeholder:text-gray-500 rounded-full focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
             />
-
-            <span className="absolute right-5 text-xs font-mono text-gray-400 bg-neutral-900 border border-white/20 px-2 py-1 rounded-md">
-              ⌘K
-            </span>
-
           </div>
 
           {/* قائمة النتائج الساحبة من Supabase */}

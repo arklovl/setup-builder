@@ -61,7 +61,7 @@ export default async function ProductPage({ params }: PageProps) {
           </Link>
         </div>
 
-        {/* كارت المنتج الرئيسي */}
+        {/* كارت المنتج الرئيسي (صار نظيف بدون أزرار عشوائية) */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
           <div className="md:col-span-5 aspect-square bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center p-6 relative overflow-hidden group">
@@ -87,20 +87,18 @@ export default async function ProductPage({ params }: PageProps) {
             <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
               {product.name}
             </h1>
-
-            <div className="pt-2 flex flex-wrap gap-3">
-              <button className="px-5 py-3 bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold rounded-xl border border-neutral-700 transition-all flex items-center gap-2">
-                <span>🔔</span> تتبع انخفاض السعر
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* قسم جدول الأسعار */}
+        {/* قسم جدول الأسعار مع زر تتبع انخفاض الأسعار في الهيدر */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
-            <div>
+            <div className="flex items-center gap-4">
               <h3 className='text-xl font-bold tracking-tight'>عروض المتاجر</h3>
+              {/* تم نقل زر تتبع انخفاض الأسعار هنا ليناسب السياق */}
+              <button className="px-3.5 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold rounded-lg border border-neutral-700 transition-all flex items-center gap-1.5">
+                <span>🔔</span> تتبع انخفاض الأسعار
+              </button>
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-neutral-300 font-mono bg-neutral-800/80 border border-neutral-700 px-3 py-1.5 rounded-lg w-fit">
               <span>📉</span> مرتبة تنازلياً من الأرخص

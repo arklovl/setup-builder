@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-6 bg-black overflow-hidden relative">
       
-      {/* 1. Nav Bar (الهيدر التفاعلي الموحد) */}
+      {/* 1. Nav Bar (هيدر علوي تفاعلي) */}
       <Navbar />
 
       {/* 2. المحتوى الرئيسي في المنتصف */}

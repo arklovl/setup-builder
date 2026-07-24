@@ -154,29 +154,30 @@ export default function ProductPage({ params }: PageProps) {
           </div>
 
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'GPU'}
               </span>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
+                {product.name}
+              </h1>
 
-              {/* زر المفضلة (القلب) بجانب الفئة */}
+              {/* زر المفضلة المحسن بجانب الاسم مع تفاعل واضح عند الضغط والـ Hover */}
               <button
                 onClick={toggleFavorite}
-                className={`flex items-center gap-2 text-xs font-mono px-3.5 py-2 rounded-xl border transition-all ${
+                className={`flex items-center justify-center gap-2 text-xs font-mono px-4 py-2.5 rounded-xl border transition-all duration-200 shrink-0 cursor-pointer active:scale-95 ${
                   isFavorite 
-                    ? 'bg-red-950/40 border-red-900/60 text-red-400' 
-                    : 'bg-neutral-900/80 border-neutral-800 text-neutral-400 hover:text-white'
+                    ? 'bg-red-950/60 border-red-800/80 text-red-400 hover:bg-red-900/60 shadow-lg shadow-red-950/30' 
+                    : 'bg-neutral-800/80 border-neutral-700 text-neutral-300 hover:bg-neutral-700 hover:text-white shadow-md'
                 }`}
-                title="إضافة/إزالة من المفضلة"
               >
-                <span className="text-base">{isFavorite ? '♥' : '♡'}</span>
+                <span className="text-base select-none">{isFavorite ? '♥' : '♡'}</span>
                 <span>{isFavorite ? 'في المفضلة' : 'إضافة للمفضلة'}</span>
               </button>
             </div>
-            
-            <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
-              {product.name}
-            </h1>
           </div>
         </div>
 

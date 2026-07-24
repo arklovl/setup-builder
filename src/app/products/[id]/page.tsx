@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import TrackPriceButton from '@/components/TrackPriceButton';
+import Navbar from '@/components/Navbar';
 
 interface PageProps {
   params: Promise<{
@@ -41,17 +42,8 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
       
-      {/* الهيدر العلوي */}
-      <header className="max-w-5xl mx-auto flex items-center justify-between pb-6 mb-4 border-b border-neutral-900">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          <span className="font-mono tracking-widest text-xs font-bold text-neutral-300">BRIEF</span>
-        </div>
-        <div className="flex items-center gap-4 text-xs font-mono text-neutral-400">
-          <Link href="/favorites" className="hover:text-white transition-colors">♡ المفضلة</Link>
-          <Link href="/login" className="hover:text-white transition-colors bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-lg">تسجيل الدخول</Link>
-        </div>
-      </header>
+      {/* الهيدر العلوي المتحدث تلقائياً */}
+      <Navbar />
 
       <div className="max-w-5xl mx-auto space-y-8">
         

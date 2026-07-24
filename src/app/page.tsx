@@ -127,23 +127,23 @@ export default function Home() {
           </p>
         </div>
 
-        {/* شريط البحث مع الحدود البيضاء الواضحة */}
+        {/* شريط البحث مع الحواف المنحنية بالكامل */}
         <div className="relative w-full">
           {isFocused && (
             <>
-              <div className="absolute -inset-[2px] rounded-lg overflow-hidden p-[2px] blur-sm opacity-80 transition-all duration-500">
+              <div className="absolute -inset-[2px] rounded-full overflow-hidden p-[2px] blur-sm opacity-80 transition-all duration-500">
                 <div className="absolute inset-[-200%] bg-[conic-gradient(from_0deg,transparent_0_240deg,#fff_360deg)] animate-[spin_3s_linear_infinite]" />
               </div>
 
-              <div className="absolute -inset-[1.5px] rounded-lg overflow-hidden p-[1.5px] transition-all duration-500">
+              <div className="absolute -inset-[1.5px] rounded-full overflow-hidden p-[1.5px] transition-all duration-500">
                 <div className="absolute inset-[-200%] bg-[conic-gradient(from_0deg,transparent_0_240deg,#ffffff_360deg)] animate-[spin_3s_linear_infinite]" />
               </div>
             </>
           )}
 
-          <div className="relative bg-[#080808] rounded-lg flex items-center border border-white/80 hover:border-white transition-colors duration-300">
+          <div className="relative bg-[#080808] rounded-full flex items-center border border-white/80 hover:border-white transition-colors duration-300">
             <svg 
-              className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" 
+              className="absolute left-5 w-5 h-5 text-gray-400 pointer-events-none" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"
@@ -158,10 +158,10 @@ export default function Home() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="وش تفكر فيه اليوم؟"
-              className="w-full text-base sm:text-lg pl-12 pr-16 py-3.5 bg-transparent text-gray-100 placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
+              className="w-full text-base sm:text-lg pl-14 pr-16 py-3.5 bg-transparent text-gray-100 placeholder:text-gray-500 rounded-full focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
             />
 
-            <span className="absolute right-4 text-xs font-mono text-gray-400 bg-neutral-900 border border-white/20 px-2 py-1 rounded">
+            <span className="absolute right-5 text-xs font-mono text-gray-400 bg-neutral-900 border border-white/20 px-2 py-1 rounded-md">
               ⌘K
             </span>
 
@@ -169,7 +169,7 @@ export default function Home() {
 
           {/* قائمة النتائج الساحبة من Supabase */}
           {filteredProducts.length > 0 && (
-            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-lg shadow-2xl overflow-hidden z-50">
+            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-2xl shadow-2xl overflow-hidden z-50">
               {filteredProducts.map((product) => (
                 <div 
                   key={product.id}
@@ -190,14 +190,14 @@ export default function Home() {
 
           {/* حالة التحميل */}
           {loading && query.trim() !== '' && (
-            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50 font-mono">
+            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-2xl p-4 text-center text-gray-500 text-sm z-50 font-mono">
               جاري البحث في قاعدة البيانات...
             </div>
           )}
 
           {/* رسالة عند عدم وجود نتائج */}
           {!loading && query.trim() !== '' && filteredProducts.length === 0 && (
-            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50">
+            <div className="absolute left-0 right-0 mt-3 bg-[#080808] border border-white/20 rounded-2xl p-4 text-center text-gray-500 text-sm z-50">
               No gear found for "{query}"
             </div>
           )}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import TrackPriceButton from '@/components/TrackPriceButton';
 import Navbar from '@/components/Navbar';
-import FavoriteButton from '@/components/FavoriteButton'; // مكون زر المفضلة التفاعلي
+import FavoriteButton from '@/components/FavoriteButton';
 
 interface PageProps {
   params: Promise<{
@@ -72,12 +72,14 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
 
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
-            <div className="flex items-center justify-between">
+            
+            {/* الفئة وزر المفضلة مرتبة بجانب بعضها بشكل ممتاز */}
+            <div className="flex items-center justify-between gap-4">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'GPU'}
               </span>
 
-              {/* زر المفضلة التفاعلي بجانب الفئة */}
+              {/* زر المفضلة التفاعلي في مكان أنيق ومرتب */}
               <FavoriteButton productId={product.id} />
             </div>
             

@@ -4,17 +4,11 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
-// تعريف شكل المنتج بناءً على جدول products
 interface Product {
   id: number
   name: string
   category: string
   price: number | string
-}
-
-// تعريف الشكل القادم من جدول favorites (لأننا نستخدم الـ joins)
-interface FavoriteItem {
-  products: Product
 }
 
 export default function FavoritesPage() {
@@ -32,15 +26,13 @@ export default function FavoritesPage() {
       const { data: { session } } = await supabase.auth.getSession()
       
       if (!session?.user) {
-        // إذا لم يكن مسجلاً دخوله، حوله لصفحة تسجيل الدخول
         router.push('/login')
         return
       }
       
       setUser(session.user)
 
-      // 2. جلب المفضلة باستخدام الـ Join
-      // نجلب من جدول favorites، ونطلب بيانات الـ product المرتبطة به
+      // 2. جلب المفضلة باستخدام العلاقة
       const { data, error } = await supabase
         .from('favorites')
         .select(`
@@ -51,17 +43,13 @@ export default function FavoritesPage() {
             price
           )
         `)
-        .eq('user_id', session.user.id) // فلترة بمفتاح المستخدم الحالي
+        .eq('user_id', session.user.id)
 
       if (error) {
         console.error('Error fetching favorites:', error)
       } else {
-        // data راح تكون مصفوفة مثل [{ products: {id:1, name:...} }, ...]
-        // نحولها لمصفوفة بسيطة من المنتجات [{id:1, name:...}, ...] وننظف القيم الفارغة
-        const formattedProducts = data
-          .map((item: FavoriteItem) => item.products)
-          .filter(Boolean);
-        
+        // استخدام any لتفادي مشاكل وتطابقات الـ TypeScript الصارمة
+        const formattedProducts = (data || []).map((item: any) => item.products).filter(Boolean)
         setFavorites(formattedProducts)
       }
       setLoading(false)
@@ -74,7 +62,6 @@ export default function FavoritesPage() {
   const removeFavorite = async (productId: number) => {
     if (!user) return
 
-    // تنفيذ أمر الحذف من جدول favorites بناءً على user_id و product_id
     const { error } = await supabase
       .from('favorites')
       .delete()
@@ -85,14 +72,13 @@ export default function FavoritesPage() {
       console.error('Error removing favorite:', error)
       alert('حدث خطأ أثناء الإزالة')
     } else {
-      // تحديث الواجهة فورياً بحذف العنصر من المصفوفة
       setFavorites(favorites.filter(item => item.id !== productId))
     }
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center p-6 bg-[#050505] text-white">
-      {/* هيدر الصفحة (نفس الهيدر الرئيسي تقريباً لتناسق التصميم) */}
+      {/* هيدر الصفحة */}
       <header className="w-full max-w-5xl flex items-center justify-between z-20 py-2 border-b border-neutral-900/50 mb-10">
         <div 
           onClick={() => router.push('/')}
@@ -125,24 +111,20 @@ export default function FavoritesPage() {
         </h1>
 
         {loading ? (
-          // حالة التحميل
           <div className="text-center text-gray-500 py-12 font-mono text-sm animate-pulse">
             جاري تحميل المفضلة...
           </div>
         ) : favorites.length === 0 ? (
-          // حالة القائمة فارغة
           <div className="text-center text-gray-500 py-12 border border-white/10 rounded-3xl bg-[#080808]">
             قائمة المفضلة لديك فارغة حالياً. ابحث عن قطع وأضفها بالضغط على أيقونة القلب ♡.
           </div>
         ) : (
-          // قائمة المنتجات المفضلة
           <div className="flex flex-col gap-3">
             {favorites.map((product) => (
               <div 
                 key={product.id}
                 className="flex items-center justify-between px-6 py-4 bg-[#080808] border border-white/10 rounded-2xl hover:border-white/20 transition-all"
               >
-                {/* الجزء الأيسر (الاسم والفئة) */}
                 <div 
                   onClick={() => router.push(`/products/${product.id}`)}
                   className="cursor-pointer flex-1 min-w-0 pr-4"
@@ -151,7 +133,6 @@ export default function FavoritesPage() {
                   <div className="text-xs text-gray-500 uppercase font-mono mt-0.5">{product.category}</div>
                 </div>
                 
-                {/* الجزء الأيمن (السعر وزر الإزالة) */}
                 <div className="flex items-center gap-5 shrink-0 pl-2">
                   <div className="text-sm font-mono text-gray-300 w-24 text-right">
                     {typeof product.price === 'number' ? `$${product.price}` : product.price}

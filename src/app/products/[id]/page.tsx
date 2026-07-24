@@ -227,7 +227,12 @@ export default function ProductPage({ params }: PageProps) {
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      <span className="text-xs text-neutral-400 font-mono">ر.س</span>
+                      {/* شعار الريال السعودي بدلاً من النص ر.س */}
+                      <span className="inline-flex items-center justify-center w-5 h-5 text-neutral-300">
+                        <svg viewBox="0 0 572 572" className="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M572 284.5C572 441.346 444.346 569 287.5 569C130.654 569 3 441.346 3 284.5C3 127.654 130.654 0 287.5 0C444.346 0 572 127.654 572 284.5ZM166.45 401.45V173.35H215.15V362.45H369.35V401.45H166.45ZM215.15 133.55V96.45H369.35V133.55H215.15ZM369.35 241.25H215.15V202.45H369.35V241.25Z" />
+                        </svg>
+                      </span>
                     </div>
 
                     <a

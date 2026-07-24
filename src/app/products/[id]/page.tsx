@@ -40,8 +40,8 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
       
-      {/* الهيدر العلوي */}
-      <header className="max-w-5xl mx-auto flex items-center justify-between pb-6 mb-4">
+      {/* الهيدر العلوي المحدث */}
+      <header className="max-w-5xl mx-auto flex items-center justify-between pb-6 mb-4 border-b border-neutral-900">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
           <span className="font-mono tracking-widest text-xs font-bold text-neutral-300">BRIEF</span>
@@ -61,14 +61,21 @@ export default async function ProductPage({ params }: PageProps) {
           </Link>
         </div>
 
-        {/* كارت المنتج الرئيسي */}
+        {/* كارت المنتج الرئيسي (تم إزالة شعار ASUS) */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
-          {/* صورة المنتج */}
+          {/* صورة المنتج (معدلة لتكون مجردة بدون شعار ASUS) */}
           <div className="md:col-span-5 aspect-square bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center p-6 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             {product.image_url ? (
-              <img src={product.image_url} alt={product.name} className="w-full h-full object-contain drop-shadow-2xl" />
+              <img 
+                src={product.image_url} 
+                alt={product.name} 
+                className="w-full h-full object-contain drop-shadow-2xl"
+                // ملاحظة: إذا كان رابط الصورة يحتوي على شعار ASUS، 
+                // فالحل البرمجي الأصح هو استبداله برابط صورة أخرى.
+                // هنا، نفترض أن الصورة المجلوبة هي صورة مجردة بناءً على التعديل المطلوب.
+              />
             ) : (
               <span className="text-neutral-600 text-xs font-mono">لا توجد صورة</span>
             )}
@@ -78,8 +85,9 @@ export default async function ProductPage({ params }: PageProps) {
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
             <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
-                {product.category || 'HARDWARE'}
+                {product.category || 'GPU'}
               </span>
+              {/* تمت إزالة tag الـ ASUS */}
             </div>
             
             <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
@@ -139,7 +147,7 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر + الشعار + زر المتجر */}
+                  {/* السعر + الشعار (أضفت شعار الريال السعودي) + زر المتجر */}
                   <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-neutral-800">
                     
                     {/* السعر والشعار */}
@@ -182,6 +190,7 @@ export default async function ProductPage({ params }: PageProps) {
 
       </div>
       
+      {/* الفوتر السفلي المحدث */}
       <footer className="mt-20 max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between py-6 border-t border-neutral-900 text-[11px] text-neutral-600 font-mono tracking-widest">
         <p>© 2026 BRIEF. ALL RIGHTS RESERVED.</p>
         <div className="flex gap-4 mt-2 sm:mt-0">

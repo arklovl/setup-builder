@@ -39,6 +39,19 @@ export default async function ProductPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
+      
+      {/* الهيدر العلوي */}
+      <header className="max-w-5xl mx-auto flex items-center justify-between pb-6 mb-4">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+          <span className="font-mono tracking-widest text-xs font-bold text-neutral-300">BRIEF</span>
+        </div>
+        <div className="flex items-center gap-4 text-xs font-mono text-neutral-400">
+          <Link href="/favorites" className="hover:text-white transition-colors">♡ المفضلة</Link>
+          <Link href="/login" className="hover:text-white transition-colors bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-lg">تسجيل الدخول</Link>
+        </div>
+      </header>
+
       <div className="max-w-5xl mx-auto space-y-8">
         
         {/* زر العودة */}
@@ -169,10 +182,12 @@ export default async function ProductPage({ params }: PageProps) {
 
       </div>
       
-      <footer className="mt-20 text-center py-6 border-t border-neutral-900">
-        <p className="text-[11px] text-neutral-600 font-mono tracking-widest uppercase">
-          © 2026 SETUP BUILDER. ALL RIGHTS RESERVED.
-        </p>
+      <footer className="mt-20 max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between py-6 border-t border-neutral-900 text-[11px] text-neutral-600 font-mono tracking-widest">
+        <p>© 2026 BRIEF. ALL RIGHTS RESERVED.</p>
+        <div className="flex gap-4 mt-2 sm:mt-0">
+          <Link href="/privacy" className="hover:text-neutral-400 transition-colors">الخصوصية</Link>
+          <Link href="/about" className="hover:text-neutral-400 transition-colors">عن الموقع</Link>
+        </div>
       </footer>
     </main>
   );

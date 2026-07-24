@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
       
-      {/* الهيدر العلوي المحدث */}
+      {/* الهيدر العلوي */}
       <header className="max-w-5xl mx-auto flex items-center justify-between pb-6 mb-4 border-b border-neutral-900">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -61,10 +61,9 @@ export default async function ProductPage({ params }: PageProps) {
           </Link>
         </div>
 
-        {/* كارت المنتج الرئيسي (تم إزالة شعار ASUS) */}
+        {/* كارت المنتج الرئيسي */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           
-          {/* صورة المنتج (معدلة لتكون مجردة بدون شعار ASUS) */}
           <div className="md:col-span-5 aspect-square bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center p-6 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             {product.image_url ? (
@@ -72,33 +71,24 @@ export default async function ProductPage({ params }: PageProps) {
                 src={product.image_url} 
                 alt={product.name} 
                 className="w-full h-full object-contain drop-shadow-2xl"
-                // ملاحظة: إذا كان رابط الصورة يحتوي على شعار ASUS، 
-                // فالحل البرمجي الأصح هو استبداله برابط صورة أخرى.
-                // هنا، نفترض أن الصورة المجلوبة هي صورة مجردة بناءً على التعديل المطلوب.
               />
             ) : (
               <span className="text-neutral-600 text-xs font-mono">لا توجد صورة</span>
             )}
           </div>
 
-          {/* تفاصيل المنتج */}
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
             <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'GPU'}
               </span>
-              {/* تمت إزالة tag الـ ASUS */}
             </div>
             
             <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
               {product.name}
             </h1>
-            
-            <p className="text-neutral-400 text-sm leading-relaxed text-justify">
-              {product.description || "قطعة أداء احترافية متوفرة في السوق السعودي. قارن الأسعار أدناه لتجد العرض الأنسب لجهازك."}
-            </p>
 
-            <div className="pt-4 flex flex-wrap gap-3">
+            <div className="pt-2 flex flex-wrap gap-3">
               <button className="px-5 py-3 bg-neutral-800 hover:bg-neutral-700 text-white text-xs font-semibold rounded-xl border border-neutral-700 transition-all flex items-center gap-2">
                 <span>🔔</span> تتبع انخفاض السعر
               </button>
@@ -106,7 +96,7 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* قسم جدول الأسعار الاحترافي */}
+        {/* قسم جدول الأسعار */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
             <div>
@@ -124,11 +114,10 @@ export default async function ProductPage({ params }: PageProps) {
                   key={store.id} 
                   className={`group relative flex flex-col sm:flex-row sm:items-center justify-between px-5 py-4 rounded-2xl border transition-all gap-4 ${
                     index === 0 
-                      ? 'bg-neutral-900 border-white/40 shadow-xl shadow-black/50' 
+                      ? 'bg-neutral-900/90 border-white/60 shadow-2xl shadow-white/5 ring-1 ring-white/30' 
                       : 'bg-neutral-950/50 border-neutral-800/70 hover:border-neutral-700'
                   }`}
                 >
-                  {/* معلومات المتجر */}
                   <div className="flex items-center space-x-3 space-x-reverse">
                     <div>
                       <div className="flex items-center gap-2">
@@ -147,10 +136,8 @@ export default async function ProductPage({ params }: PageProps) {
                     </div>
                   </div>
 
-                  {/* السعر + الشعار (أضفت شعار الريال السعودي) + زر المتجر */}
                   <div className="flex items-center justify-between sm:justify-end space-x-6 space-x-reverse shrink-0 border-t sm:border-t-0 pt-3 sm:pt-0 border-neutral-800">
                     
-                    {/* السعر والشعار */}
                     <div className="flex items-center gap-2 font-mono">
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
@@ -162,14 +149,13 @@ export default async function ProductPage({ params }: PageProps) {
                       />
                     </div>
 
-                    {/* زر زيارة المتجر */}
                     <a
                       href={store.store_url || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 ${
                         index === 0
-                          ? 'bg-white text-black hover:bg-neutral-200 active:scale-95'
+                          ? 'bg-white text-black hover:bg-neutral-200 active:scale-95 shadow-lg shadow-white/10'
                           : 'bg-neutral-800 text-white hover:bg-neutral-700 border border-neutral-700 active:scale-95'
                       }`}
                     >
@@ -183,14 +169,13 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
           ) : (
             <div className="text-center py-12 text-neutral-500 font-mono text-xs border border-dashed border-neutral-800 rounded-2xl bg-neutral-950/30">
-              لا توجد أسعار مسجلة لهذا المنتج حالياً. أضف روابط المتاجر والأسعار من لوحة تحكم Supabase.
+              لا توجد أسعار مسجلة لهذا المنتج حالياً.
             </div>
           )}
         </div>
 
       </div>
       
-      {/* الفوتر السفلي المحدث */}
       <footer className="mt-20 max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between py-6 border-t border-neutral-900 text-[11px] text-neutral-600 font-mono tracking-widest">
         <p>© 2026 BRIEF. ALL RIGHTS RESERVED.</p>
         <div className="flex gap-4 mt-2 sm:mt-0">

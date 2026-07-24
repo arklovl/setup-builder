@@ -1,11 +1,7 @@
-'use client';
-
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import TrackPriceButton from '@/components/TrackPriceButton';
 import Navbar from '@/components/Navbar';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface PageProps {
   params: Promise<{
@@ -13,104 +9,18 @@ interface PageProps {
   }>;
 }
 
-export default function ProductPage({ params }: PageProps) {
-  const router = useRouter();
-  const [productId, setProductId] = useState<string | null>(null);
-  const [product, setProduct] = useState<any>(null);
-  const [storesPrices, setStoresPrices] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [user, setUser] = useState<any>(null);
+export default async function ProductPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const productId = resolvedParams.id;
 
-  useEffect(() => {
-    async function loadData() {
-      const resolvedParams = await params;
-      const id = resolvedParams.id;
-      setProductId(id);
+  // 1. جلب بيانات المنتج الأساسي
+  const { data: product, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('id', productId)
+    .single();
 
-      // 1. التحقق من المستخدم الحالي
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-
-      if (session?.user) {
-        // التحقق هل المنتج في المفضلة مسبقاً
-        const { data: favData } = await supabase
-          .from('favorites')
-          .select('*')
-          .eq('user_id', session.user.id)
-          .eq('product_id', id)
-          .single();
-        
-        if (favData) setIsFavorite(true);
-      }
-
-      // 2. جلب بيانات المنتج الأساسي
-      const { data: prodData, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error || !prodData) {
-        setProduct(null);
-        setLoading(false);
-        return;
-      }
-      setProduct(prodData);
-
-      // 3. جلب أسعار المتاجر وترتيبها من الأرخص للأغلى
-      const { data: pricesData } = await supabase
-        .from('product_prices')
-        .select('*')
-        .eq('product_id', id)
-        .order('price', { ascending: true });
-
-      setStoresPrices(pricesData || []);
-      setLoading(false);
-    }
-
-    loadData();
-  }, [params]);
-
-  // دالة تبديل المفضلة (إضافة / إزالة)
-  const toggleFavorite = async () => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
-    if (isFavorite) {
-      // إزالة من المفضلة
-      const { error } = await supabase
-        .from('favorites')
-        .delete()
-        .eq('user_id', user.id)
-        .eq('product_id', productId);
-
-      if (!error) {
-        setIsFavorite(false);
-      }
-    } else {
-      // إضافة للمفضلة
-      const { error } = await supabase
-        .from('favorites')
-        .insert({ user_id: user.id, product_id: productId });
-
-      if (!error) {
-        setIsFavorite(true);
-      }
-    }
-  };
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-6 font-mono text-sm">
-        جاري التحميل...
-      </main>
-    );
-  }
-
-  if (!product) {
+  if (error || !product) {
     return (
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center p-6">
         <h1 className="text-3xl font-bold mb-3">المنتج غير موجود</h1>
@@ -122,10 +32,17 @@ export default function ProductPage({ params }: PageProps) {
     );
   }
 
+  // 2. جلب أسعار المتاجر وترتيبها من الأرخص للأغلى
+  const { data: storesPrices } = await supabase
+    .from('product_prices')
+    .select('*')
+    .eq('product_id', productId)
+    .order('price', { ascending: true });
+
   return (
     <main className="min-h-screen bg-neutral-950 text-white selection:bg-white selection:text-black p-4 md:p-10">
       
-      {/* الهيدر العلوي */}
+      {/* الهيدر العلوي المتحدث تلقائياً */}
       <Navbar />
 
       <div className="max-w-5xl mx-auto space-y-8">
@@ -154,24 +71,10 @@ export default function ProductPage({ params }: PageProps) {
           </div>
 
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'GPU'}
               </span>
-
-              {/* زر المفضلة (القلب) بجانب الفئة مع تحسين التفاعل والضغط */}
-              <button
-                onClick={toggleFavorite}
-                className={`flex items-center gap-2 text-xs font-mono px-3.5 py-2 rounded-xl border transition-all duration-200 active:scale-95 cursor-pointer ${
-                  isFavorite 
-                    ? 'bg-red-950/60 border-red-800/80 text-red-400 hover:bg-red-900/60 shadow-lg shadow-red-950/30' 
-                    : 'bg-neutral-900/80 border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700'
-                }`}
-                title="إضافة/إزالة من المفضلة"
-              >
-                <span className="text-base select-none">{isFavorite ? '♥' : '♡'}</span>
-                <span>{isFavorite ? 'في المفضلة' : 'إضافة للمفضلة'}</span>
-              </button>
             </div>
             
             <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
@@ -180,11 +83,12 @@ export default function ProductPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* قسم جدول الأسعار */}
+        {/* قسم جدول الأسعار مع زر تتبع انخفاض الأسعار التفاعلي */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-xl space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-800 pb-5">
             <div className="flex items-center gap-4">
-              <h3 className="text-xl font-bold tracking-tight">عروض المتاجر</h3>
+              <h3 className='text-xl font-bold tracking-tight'>عروض المتاجر</h3>
+              {/* زر تتبع انخفاض الأسعار المربوط بقاعدة البيانات والمصادقة */}
               <TrackPriceButton productId={product.id} />
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-neutral-300 font-mono bg-neutral-800/80 border border-neutral-700 px-3 py-1.5 rounded-lg w-fit">
@@ -227,12 +131,11 @@ export default function ProductPage({ params }: PageProps) {
                       <span className="text-2xl font-black text-white tracking-tight">
                         {store.price}
                       </span>
-                      {/* شعار الريال السعودي بدلاً من النص ر.س */}
-                      <span className="inline-flex items-center justify-center w-5 h-5 text-neutral-300">
-                        <svg viewBox="0 0 572 572" className="w-full h-full fill-current" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M572 284.5C572 441.346 444.346 569 287.5 569C130.654 569 3 441.346 3 284.5C3 127.654 130.654 0 287.5 0C444.346 0 572 127.654 572 284.5ZM166.45 401.45V173.35H215.15V362.45H369.35V401.45H166.45ZM215.15 133.55V96.45H369.35V133.55H215.15ZM369.35 241.25H215.15V202.45H369.35V241.25Z" />
-                        </svg>
-                      </span>
+                      <img 
+                        src="https://commons.wikimedia.org/wiki/Special:FilePath/Saudi_Riyal_Symbol.svg" 
+                        alt="ر.س" 
+                        className="w-5 h-5 object-contain brightness-0 invert -translate-x-1" 
+                      />
                     </div>
 
                     <a

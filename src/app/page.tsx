@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import Navbar from '@/components/Navbar'
 
 interface Product {
   id: number
@@ -52,24 +53,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-6 bg-black overflow-hidden relative">
       
-      {/* 1. Nav Bar (هيدر علوي) */}
-      <header className="w-full max-w-5xl flex items-center justify-between z-20 py-2">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
-          <span className="text-xs font-bold tracking-widest text-gray-300 uppercase font-mono">
-            BRIEF
-          </span>
-        </div>
-
-        <div className="flex items-center gap-4 dir-rtl">
-          <button className="text-xs text-gray-400 hover:text-white transition-colors duration-200">
-            المفضلة ♡
-          </button>
-          <button className="text-xs text-white bg-neutral-900 hover:bg-neutral-800 border border-gray-800 px-3.5 py-1.5 rounded-full transition-all duration-200">
-            تسجيل الدخول
-          </button>
-        </div>
-      </header>
+      {/* 1. Nav Bar (الهيدر التفاعلي الموحد) */}
+      <Navbar />
 
       {/* 2. المحتوى الرئيسي في المنتصف */}
       <div className="relative w-full max-w-2xl flex flex-col items-center z-10 my-auto">

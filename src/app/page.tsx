@@ -75,7 +75,7 @@ export default function Home() {
     )
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-6 bg-black overflow-hidden relative">
+    <main className="flex min-h-screen flex-col items-center justify-between p-6 bg-[#0a0a0a] overflow-hidden relative">
       
       {/* 1. Nav Bar (الهيدر العلوي المتناسق) */}
       <header className="w-full max-w-5xl flex items-center justify-between z-20 py-2">
@@ -141,7 +141,7 @@ export default function Home() {
             </>
           )}
 
-          <div className="relative bg-black rounded-lg flex items-center border border-white/80 hover:border-white transition-colors duration-300">
+          <div className="relative bg-[#111111] rounded-lg flex items-center border border-white/80 hover:border-white transition-colors duration-300">
             <svg 
               className="absolute left-4 w-5 h-5 text-gray-400 pointer-events-none" 
               fill="none" 
@@ -158,7 +158,7 @@ export default function Home() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="وش تفكر فيه اليوم؟"
-              className="w-full text-base sm:text-lg pl-12 pr-16 py-3.5 bg-black text-gray-100 placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
+              className="w-full text-base sm:text-lg pl-12 pr-16 py-3.5 bg-transparent text-gray-100 placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-0 transition-all duration-300 dir-auto"
             />
 
             <span className="absolute right-4 text-xs font-mono text-gray-400 bg-neutral-900 border border-white/20 px-2 py-1 rounded">
@@ -169,7 +169,7 @@ export default function Home() {
 
           {/* قائمة النتائج الساحبة من Supabase */}
           {filteredProducts.length > 0 && (
-            <div className="absolute left-0 right-0 mt-3 bg-neutral-950 border border-white/20 rounded-lg shadow-2xl overflow-hidden z-50">
+            <div className="absolute left-0 right-0 mt-3 bg-[#121212] border border-white/20 rounded-lg shadow-2xl overflow-hidden z-50">
               {filteredProducts.map((product) => (
                 <div 
                   key={product.id}
@@ -190,14 +190,14 @@ export default function Home() {
 
           {/* حالة التحميل */}
           {loading && query.trim() !== '' && (
-            <div className="absolute left-0 right-0 mt-3 bg-neutral-950 border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50 font-mono">
+            <div className="absolute left-0 right-0 mt-3 bg-[#121212] border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50 font-mono">
               جاري البحث في قاعدة البيانات...
             </div>
           )}
 
           {/* رسالة عند عدم وجود نتائج */}
           {!loading && query.trim() !== '' && filteredProducts.length === 0 && (
-            <div className="absolute left-0 right-0 mt-3 bg-neutral-950 border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50">
+            <div className="absolute left-0 right-0 mt-3 bg-[#121212] border border-white/20 rounded-lg p-4 text-center text-gray-500 text-sm z-50">
               No gear found for "{query}"
             </div>
           )}
@@ -211,7 +211,7 @@ export default function Home() {
               <button
                 key={tag}
                 onClick={() => setQuery(tag)}
-                className="text-xs text-gray-400 hover:text-white bg-neutral-950 hover:bg-neutral-900 border border-gray-800 px-3 py-1.5 rounded-full transition-all duration-200"
+                className="text-xs text-gray-400 hover:text-white bg-[#121212] hover:bg-neutral-900 border border-gray-800 px-3 py-1.5 rounded-full transition-all duration-200"
               >
                 {tag}
               </button>

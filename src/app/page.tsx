@@ -12,7 +12,7 @@ interface Product {
   currency?: string
 }
 
-const QUICK_TAGS = ['GPUs', 'Mice', 'Keyboards', 'Monitors', 'Audio']
+const QUICK_TAGS = ['GPU', 'Mice', 'Keyboards', 'Monitors', 'Audio']
 
 export default function Home() {
   const router = useRouter()

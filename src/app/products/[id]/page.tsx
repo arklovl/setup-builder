@@ -73,19 +73,23 @@ export default async function ProductPage({ params }: PageProps) {
 
           <div className="md:col-span-7 flex flex-col justify-center space-y-4">
             
-            {/* الفئة وزر المفضلة مرتبة بجانب بعضها بشكل ممتاز */}
-            <div className="flex items-center justify-between gap-4">
+            {/* الفئة */}
+            <div className="inline-flex items-center space-x-2 space-x-reverse w-fit">
               <span className="px-3 py-1 bg-neutral-800/80 border border-neutral-700 text-neutral-300 text-xs font-mono rounded-full uppercase tracking-wider">
                 {product.category || 'GPU'}
               </span>
-
-              {/* زر المفضلة التفاعلي في مكان أنيق ومرتب */}
-              <FavoriteButton productId={product.id} />
             </div>
             
+            {/* اسم المنتج */}
             <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
               {product.name}
             </h1>
+
+            {/* زر المفضلة في المكان الجديد الذي حددته */}
+            <div className="pt-2">
+              <FavoriteButton productId={product.id} />
+            </div>
+
           </div>
         </div>
 

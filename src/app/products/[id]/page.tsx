@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import TrackPriceButton '@/components/TrackPriceButton';
+import TrackPriceButton from '@/components/TrackPriceButton';
 import Navbar from '@/components/Navbar';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';

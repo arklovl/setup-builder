@@ -10,13 +10,13 @@ export default function TrackPriceButton({ productId }: { productId: string | nu
 
   useEffect(() => {
     async function checkTracking() {
-      const { data: { session } ) = await supabase.auth.getSession()
-      if (!session) return
+      const { data: sessionData } = await supabase.auth.getSession()
+      if (!sessionData?.session) return
 
       const { data } = await supabase
         .from('price_alerts')
         .select('*')
-        .eq('user_id', session.user.id)
+        .eq('user_id', sessionData.session.user.id)
         .eq('product_id', productId)
         .single()
 
@@ -27,24 +27,26 @@ export default function TrackPriceButton({ productId }: { productId: string | nu
 
   const handleToggleTrack = async () => {
     setLoading(true)
-    const { data: { session } } = await supabase.auth.getSession()
+    const { data: sessionData } = await supabase.auth.getSession()
     
-    if (!session) {
+    if (!sessionData?.session) {
       router.push('/login')
       return
     }
+
+    const userId = sessionData.session.user.id
 
     if (isTracking) {
       await supabase
         .from('price_alerts')
         .delete()
-        .eq('user_id', session.user.id)
+        .eq('user_id', userId)
         .eq('product_id', productId)
       setIsTracking(false)
     } else {
       await supabase
         .from('price_alerts')
-        .insert([{ user_id: session.user.id, product_id: productId }])
+        .insert([{ user_id: userId, product_id: productId }])
       setIsTracking(true)
     }
     setLoading(false)

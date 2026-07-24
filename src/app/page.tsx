@@ -211,7 +211,7 @@ export default function Home() {
               <button
                 key={tag}
                 onClick={() => setQuery(tag)}
-                className="text-xs text-gray-400 hover:text-white bg-[#080808] hover:bg-neutral-900 border border-gray-800 px-3 py-1.5 rounded-full transition-all duration-200"
+                className="text-xs text-gray-300 hover:text-white bg-[#080808] hover:bg-neutral-900 border border-white/40 hover:border-white px-3 py-1.5 rounded-full transition-all duration-200"
               >
                 {tag}
               </button>
